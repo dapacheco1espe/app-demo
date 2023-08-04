@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <h1>Here list devices</h1>
+    <button (click)="activateBluetooth()" class="button">Buscar dispositivos</button>
+    <div *ngFor="let dev of devices">
+      <p>{{dev.name}}</p>
+      <p>{{dev.id}}</p>
+      <button (click)="connect(dev.address)" class="button">Conectar</button>
+      <button (click)="disconnect()" class="button">Desconectar</button>
+    </div>
+    <h2>Received data</h2>
+    <button (click)="read()" class="button">Leer data</button>
+    <button (click)="write()" class="button">Escribir data</button>
+  </div>
+</ion-content>

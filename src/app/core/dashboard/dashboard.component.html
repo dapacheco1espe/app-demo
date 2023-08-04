@@ -1,0 +1,83 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
+    <ion-button (click)="scanRfidTag()" slot="end">
+      <ion-icon name="Bluetooth"></ion-icon>
+      <p>Escanear</p>
+    </ion-button>
+    <ion-button (click)="scanAvailableBluetoothDevices()" slot="end">
+      <ion-icon name="Bluetooth"></ion-icon>
+      <p>Buscar2</p>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" padding>
+  <ion-card>
+
+    <img src="https://www.espe.edu.ec/wp-content/uploads/2018/11/espe.png"/>
+
+    <ion-card-content>
+      <ion-card-title>
+        Unidad de bienes
+      </ion-card-title>
+      <p>
+        Bienvenido al programa para la toma física de bienes de la ESPE
+      </p>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Lista</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-card ion-item *ngFor="let device of listaTags">
+          <ion-card-header>
+            <ion-card-subtitle>{{ device || 'Unnamed2' }}</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <p>listaTags</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+
+     <ion-button  expand="block" (click)="leerArrayListaTags2()">
+        Mostrar2
+       </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Lista de dispositivos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-card ion-item *ngFor="let data of pairedList">
+          <ion-card-header>
+            <ion-card-subtitle>{{ data.name || 'Unnamed' }}</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <p>{{ data.id }}</p>
+            <p>{{data.address}}</p>
+            <p>{{data.class}}</p>
+            <ion-button color="danger" expand="block" (click)="deviceDisconnect()">
+              <ion-icon slot="start" name="stop-circle-outline"></ion-icon>Desconectar
+            </ion-button>
+            <ion-button  expand="block" (click)="connect(data.address)">
+              <ion-icon slot="start" name="play-outline"></ion-icon>Conectar
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
