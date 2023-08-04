@@ -10,6 +10,22 @@ const routes: Routes = [
       {
         path:'dashboard',
         loadChildren: () => import('../dashboard/dashboard.module') .then(m => m.DashboardModule),
+      },
+      {
+        path: 'buscar',
+        loadChildren: () => import('../buscar/buscar.module') .then(m => m.BuscarModule),
+      },
+      {
+        path: 'tomaFisica',
+        loadChildren: () => import('../toma-fisica/toma-fisica.module') .then(m => m.TomaFisicaModule),
+      },
+      {
+        path: 'comparar',
+        loadChildren: () => import('../comparar/comparar.module') .then(m => m.CompararModule),
+      },
+      {
+        path:'registroTag',
+        loadChildren:() => import('../registro-tag/registro-tag.module') .then(m => m.RegistroTagModule)
       }
     ]
   },

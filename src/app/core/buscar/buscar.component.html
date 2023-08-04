@@ -1,0 +1,93 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Buscar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" padding>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Busqueda</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Ingrese Los Datos Para Hacer Una Busqueda Más Específica De Los Bienes</ion-card-subtitle>
+      <ion-card-title>Formulario de busqueda de bienes</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked">Sede</ion-label>
+            <ion-input value="Sede Sangolqui - ESPE" disabled="true"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Cédula custodio</ion-label>
+            <ion-input [(ngModel)]="custodio1Ingresado" placeholder="Ej: 1716223344" name="custodio1Ingresado"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Nombre custodio</ion-label>
+            <ion-input style="text-transform: uppercase;" placeholder="Ej: VICTOR APUNTE" [(ngModel)]="nombreCustodioIngresado" name="nombreCustodioIngresado"></ion-input>
+          </ion-item>
+          <ion-row>
+            <ion-col width-50 style="text-align: right">
+              <ion-button (click)="buscarBienes()"><ion-icon slot="start" name="search-outline"></ion-icon>Buscar</ion-button>
+            </ion-col>
+            <ion-col width-50 style="text-align: left">
+              <ion-button (click)="limpiarBusqueda()" color="danger"><ion-icon slot="start" name="ellipse-outline"></ion-icon>Limpiar</ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col width-50 style="text-align: center">
+              <ion-button (click)="etiquetarActivos()" color="success"><ion-icon slot="start" name="copy-outline"></ion-icon>Registrar</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-card-content *ngIf="!mostrarCustodios" >
+    <ion-list>
+      <ion-card ion-item *ngFor="let activo of activos">
+        <ion-card-header>
+          <ion-card-subtitle></ion-card-subtitle>
+          <ion-card-title>{{ activo.descripcion }}</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          Identificación custodio: {{ activo.custodio1 }}
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Cargando datos...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-card-content>
+  <ion-card-content *ngIf="mostrarCustodios" >
+    <ion-list>
+      <ion-card ion-item *ngFor="let funcionario of listaFuncionarios" (click)="escogerFuncionario(funcionario)">
+        <ion-card-header>
+          <ion-card-title>Funcionario</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <p>Nombre: {{ funcionario.nombre }}</p>
+          <p>Identificación: {{ funcionario.identificacion }}</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Cargando datos...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-card-content>
+</ion-content>
