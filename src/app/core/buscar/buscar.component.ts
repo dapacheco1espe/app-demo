@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController, IonInfiniteScroll, ToastController } from '@ionic/angular';
 import { Activo } from './Models/Activo';
 import { Funcionario } from './Models/Funcionario';
+import { BuscarService } from './services/buscar.service';
 
 @Component({
   selector: 'app-buscar',
@@ -19,7 +20,8 @@ export class BuscarComponent  implements OnInit {
   public nombreCustodioIngresado:string = '';
   public mostrarCustodios:boolean = false;
 
-  constructor( private _alertController: AlertController, private _toastController: ToastController) {}
+  constructor( private _alertController: AlertController, private _toastController: ToastController,
+    private _buscarActivosService:BuscarService) {}
 
   public ngOnInit() {
   }
@@ -31,27 +33,27 @@ export class BuscarComponent  implements OnInit {
 
   buscarBienes() {
     // this.service.custodio1 = this.custodio1Ingresado;
-    // if (this.custodio1Ingresado !== '' ) {
-    //   this.mostrarCustodios = false;
-    //   this.service.getActivos(this.custodio1Ingresado)
-    //   .subscribe( data => {
-    //     if (data.length > 0) {
-    //       this.activos = data;
-    //     } else {
-    //       this.showError('El custodio ' + this.custodio1Ingresado +  ' no tiene bienes');
-    //     }
-    //   });
-    // } else {
-    //   this.mostrarCustodios = true;
-    //   this.service.getFuncionarios(this.nombreCustodioIngresado.toUpperCase())
-    //   .subscribe( data => {
-    //     if (data.length > 0 ) {
-    //       this.listaFuncionarios = data;
-    //     } else {
-    //       this.showError('El nombre ingresado ' + this.nombreCustodioIngresado + ' no existe');
-    //     }
-    //   });
-    // }
+    if (this.custodio1Ingresado !== '' ) {
+      this.mostrarCustodios = false;
+      this._buscarActivosService.getActivosByCustodio({custodio1:this.custodio1Ingresado})
+      .subscribe( data => {
+        if (data.length > 0) {
+          this.activos = data;
+        } else {
+          this.showError('El custodio ' + this.custodio1Ingresado +  ' no tiene bienes');
+        }
+      });
+    } else {
+      this.mostrarCustodios = true;
+      // this._buscarActivosService.getActivosRfidByParameter('usuario', {usuario: this.nombreCustodioIngresado.toUpperCase()})
+      // .subscribe( data => {
+      //   if (data.length > 0 ) {
+      //     this.listaFuncionarios = data;
+      //   } else {
+      //     this.showError('El nombre ingresado ' + this.nombreCustodioIngresado + ' no existe');
+      //   }
+      // });
+    }
   }
 
   etiquetarActivos() {
