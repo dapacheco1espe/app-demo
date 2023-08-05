@@ -33,7 +33,7 @@
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Lista</ion-card-title>
+      <ion-card-title>Lista de Tags Escaneados</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
@@ -47,10 +47,6 @@
           </ion-card-content>
         </ion-card>
       </ion-list>
-
-     <ion-button  expand="block" (click)="leerArrayListaTags2()">
-        Mostrar2
-       </ion-button>
     </ion-card-content>
   </ion-card>
 
@@ -60,19 +56,19 @@
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-        <ion-card ion-item *ngFor="let data of pairedList">
+        <ion-card ion-item *ngFor="let device of pairedList">
           <ion-card-header>
-            <ion-card-subtitle>{{ data.name || 'Unnamed' }}</ion-card-subtitle>
+            <ion-card-subtitle>{{ device.name || 'Unnamed' }}</ion-card-subtitle>
           </ion-card-header>
         
           <ion-card-content>
-            <p>{{ data.id }}</p>
-            <p>{{data.address}}</p>
-            <p>{{data.class}}</p>
-            <ion-button color="danger" expand="block" (click)="deviceDisconnect()">
+            <p>{{ device.id }}</p>
+            <p>{{device.address}}</p>
+            <p>{{device.class}}</p>
+            <ion-button *ngIf="device.connected" color="danger" expand="block" (click)="deviceDisconnect(device)">
               <ion-icon slot="start" name="stop-circle-outline"></ion-icon>Desconectar
             </ion-button>
-            <ion-button  expand="block" (click)="connect(data.address)">
+            <ion-button *ngIf="!device.connected"  expand="block" (click)="connect(device)">
               <ion-icon slot="start" name="play-outline"></ion-icon>Conectar
             </ion-button>
           </ion-card-content>

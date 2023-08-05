@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController, IonInfiniteScroll, ToastController } from '@ionic/angular';
+import { Activo } from './Models/Activo';
+import { Funcionario } from './Models/Funcionario';
 
 @Component({
   selector: 'app-buscar',
@@ -7,71 +9,58 @@ import { AlertController, IonInfiniteScroll, ToastController } from '@ionic/angu
   styleUrls: ['./buscar.component.scss'],
 })
 export class BuscarComponent  implements OnInit {
-
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
-  entrada1: string = '';
-  //activos: Activo[] = [];
-  activos: any[] = [];
-  //listaFuncionarios: Funcionario[] = [];
-  listaFuncionarios: any[] = [];
-  custodio1Ingresado = '';
-  nombreCustodioIngresado = '';
-  mostrarCustodios = false;
+  private _entrada1: string = '';
+  public activos: Activo[] = [];
+  public listaFuncionarios: Funcionario[] = [];
 
-  constructor( private _alertController: AlertController, private _toastController: ToastController) {
-    /* if (service.custodio1 === '') {
-    } else {
-      this.service.getActivos(service.custodio1)
-      .subscribe(data => {
-        this.activos = data;
-        this.service.activosFinal = this.activos;
-      });
-    }*/
+  public custodio1Ingresado:string = '';
+  public nombreCustodioIngresado:string = '';
+  public mostrarCustodios:boolean = false;
+
+  constructor( private _alertController: AlertController, private _toastController: ToastController) {}
+
+  public ngOnInit() {
   }
 
-  ngOnInit() {
-  }
-
-  //escogerFuncionario(funcionario: Funcionario) {
-  escogerFuncionario(funcionario: any) {
-    //this.service.funcionarioGlobal = funcionario;
-    //this.custodio1Ingresado = this.service.funcionarioGlobal.identificacion;
-    this.custodio1Ingresado = 'xyz';
+  escogerFuncionario(funcionario: Funcionario) {
+    // this.service.funcionarioGlobal = funcionario;
+    // this.custodio1Ingresado = this.service.funcionarioGlobal.identificacion;
   }
 
   buscarBienes() {
-    //this.service.custodio1 = this.custodio1Ingresado;
-    if (this.custodio1Ingresado !== '' ) {
-      this.mostrarCustodios = false;
-      // this.service.getActivos(this.custodio1Ingresado)
-      // .subscribe( data => {
-      //   if (data.length > 0) {
-      //     this.activos = data;
-      //   } else {
-      //     this.showError('El custodio ' + this.custodio1Ingresado +  ' no tiene bienes');
-      //   }
-      // });
-    } else {
-      this.mostrarCustodios = true;
-      // this.service.getFuncionarios(this.nombreCustodioIngresado.toUpperCase())
-      // .subscribe( data => {
-      //   if (data.length > 0 ) {
-      //     this.listaFuncionarios = data;
-      //   } else {
-      //     this.showError('El nombre ingresado ' + this.nombreCustodioIngresado + ' no existe');
-      //   }
-      // });
-    }
+    // this.service.custodio1 = this.custodio1Ingresado;
+    // if (this.custodio1Ingresado !== '' ) {
+    //   this.mostrarCustodios = false;
+    //   this.service.getActivos(this.custodio1Ingresado)
+    //   .subscribe( data => {
+    //     if (data.length > 0) {
+    //       this.activos = data;
+    //     } else {
+    //       this.showError('El custodio ' + this.custodio1Ingresado +  ' no tiene bienes');
+    //     }
+    //   });
+    // } else {
+    //   this.mostrarCustodios = true;
+    //   this.service.getFuncionarios(this.nombreCustodioIngresado.toUpperCase())
+    //   .subscribe( data => {
+    //     if (data.length > 0 ) {
+    //       this.listaFuncionarios = data;
+    //     } else {
+    //       this.showError('El nombre ingresado ' + this.nombreCustodioIngresado + ' no existe');
+    //     }
+    //   });
+    // }
   }
 
   etiquetarActivos() {
-    if (this.activos.length > 0 ) {
-      //this.service.listaActivosEtiquetar = this.activos;
-      this.showToast('Se copio correctamente');
-    } else {
-      this.showError('No hay bienes para etiquetar');
-    }
+    // if (this.activos.length > 0 ) {
+    //   this.service.listaActivosEtiquetar = this.activos;
+    //   this.showToast('Se copio correctamente');
+    // } else {
+    //   this.showError('No hay bienes para etiquetar');
+    // }
   }
 
   limpiarBusqueda() {
