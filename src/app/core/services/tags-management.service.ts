@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Funcionario } from '../buscar/Models/Funcionario';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,12 @@ import { BehaviorSubject } from 'rxjs';
 export class TagsManagementService {
 
   private _tagsList:BehaviorSubject<any> = new BehaviorSubject(null);
+  private _currentFuncionario:BehaviorSubject<Funcionario> = new BehaviorSubject({
+    codigo          : 0,
+    codigoEmpresa   : 0,
+    nombre          : '',
+    identificacion  : '',
+  });
 
   constructor() { }
 
@@ -18,5 +25,13 @@ export class TagsManagementService {
     const tmpTagList:Array<any> = this._tagsList.getValue();
     tmpTagList.push(tag);
     this._tagsList.next(tmpTagList);
+  }
+
+  public get currentFuncionario():Funcionario{
+    return this._currentFuncionario.getValue();
+  }
+
+  public set setFuncionario(funcionario:Funcionario){
+    this._currentFuncionario.next(funcionario);
   }
 }

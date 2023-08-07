@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController, IonInfiniteScroll, ToastController } from '@ionic/angular';
+import { TagsManagementService } from '../services/tags-management.service';
 import { Activo } from './Models/Activo';
 import { Funcionario } from './Models/Funcionario';
 import { BuscarService } from './services/buscar.service';
@@ -21,14 +22,14 @@ export class BuscarComponent  implements OnInit {
   public mostrarCustodios:boolean = false;
 
   constructor( private _alertController: AlertController, private _toastController: ToastController,
-    private _buscarActivosService:BuscarService) {}
+    private _buscarActivosService:BuscarService, private _tagsManagementService:TagsManagementService) {}
 
   public ngOnInit() {
   }
 
   escogerFuncionario(funcionario: Funcionario) {
-    // this.service.funcionarioGlobal = funcionario;
-    // this.custodio1Ingresado = this.service.funcionarioGlobal.identificacion;
+    this._tagsManagementService.setFuncionario = funcionario;
+    this.custodio1Ingresado =this._tagsManagementService.currentFuncionario.identificacion;
   }
 
   buscarBienes() {
@@ -45,24 +46,26 @@ export class BuscarComponent  implements OnInit {
       });
     } else {
       this.mostrarCustodios = true;
-      // this._buscarActivosService.getActivosRfidByParameter('usuario', {usuario: this.nombreCustodioIngresado.toUpperCase()})
-      // .subscribe( data => {
-      //   if (data.length > 0 ) {
-      //     this.listaFuncionarios = data;
-      //   } else {
-      //     this.showError('El nombre ingresado ' + this.nombreCustodioIngresado + ' no existe');
-      //   }
-      // });
+      this._buscarActivosService.getFuncionarios({nombre: this.nombreCustodioIngresado})
+      .subscribe( data => {
+        if (data.length > 0 ) {
+          this.listaFuncionarios = data;
+        } else {
+          this.showError('El nombre ingresado ' + this.nombreCustodioIngresado + ' no existe');
+        }
+      });
     }
   }
 
   etiquetarActivos() {
-    // if (this.activos.length > 0 ) {
-    //   this.service.listaActivosEtiquetar = this.activos;
-    //   this.showToast('Se copio correctamente');
-    // } else {
-    //   this.showError('No hay bienes para etiquetar');
-    // }
+    if (this.activos.length > 0 ) {
+      for(let i = 0;i < this.activos.length; i++){
+        this._tagsManagementService.pushTag= this.activos[i];
+      }
+      this.showToast('Se copio correctamente');
+    } else {
+      this.showError('No hay bienes para etiquetar');
+    }
   }
 
   limpiarBusqueda() {
