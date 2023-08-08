@@ -14,7 +14,7 @@
       <ion-card-title>Toma Física</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-button expand="block" (click)="read2()"><ion-icon slot="start" name="play-outline"></ion-icon>Leer</ion-button>
+      <ion-button expand="block" (click)="buscarEtiqueta('')"><ion-icon slot="start" name="play-outline"></ion-icon>Leer</ion-button>
     </ion-card-content>
   </ion-card>
 
@@ -24,21 +24,21 @@
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-        <!-- <ion-card ion-item *ngFor="let activoR of activosRfid" (click)="abrirDetalleR(activoR)">
+        <ion-card ion-item *ngFor="let activoR of activosRfid" (click)="abrirDetalleR(activoR)">
           <ion-card-header>
-            <ion-card-subtitle [ngClass]="{ 'black': (activoR.custodio1 == service.funcionarioGlobal.identificacion), 
-            'red': !(activoR.custodio1 == service.funcionarioGlobal.identificacion) }">
+            <ion-card-subtitle [ngClass]="{ 'black': (activoR.custodio1 == tagsManagementService.currentFuncionario.identificacion), 
+            'red': !(activoR.custodio1 == tagsManagementService.currentFuncionario.identificacion) }">
             {{ activoR.codigo }}</ion-card-subtitle>
-            <ion-card-title [ngClass]="{ 'black': (activoR.custodio1 == service.funcionarioGlobal.identificacion), 
-            'red': !(activoR.custodio1 == service.funcionarioGlobal.identificacion) }">
+            <ion-card-title [ngClass]="{ 'black': (activoR.custodio1 == tagsManagementService.currentFuncionario.identificacion), 
+            'red': !(activoR.custodio1 == tagsManagementService.currentFuncionario.identificacion) }">
             {{ activoR.descripcion }}</ion-card-title>
           </ion-card-header>
         
-          <ion-card-content [ngClass]="{ 'black': (activoR.custodio1 == service.funcionarioGlobal.identificacion), 
-          'red': !(activoR.custodio1 == service.funcionarioGlobal.identificacion) }">
+          <ion-card-content [ngClass]="{ 'black': (activoR.custodio1 == tagsManagementService.currentFuncionario.identificacion), 
+          'red': !(activoR.custodio1 == tagsManagementService.currentFuncionario.identificacion) }">
             {{ activoR.custodio1 }}
           </ion-card-content>
-        </ion-card> -->
+        </ion-card>
       </ion-list>
     </ion-card-content>
   </ion-card>

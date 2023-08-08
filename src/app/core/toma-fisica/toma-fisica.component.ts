@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BluetoothSerial } from '@awesome-cordova-plugins/bluetooth-serial/ngx';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { ActivoRfid } from './Models/ActivoRfid';
+import { DetalleActComponent } from './detalle-act/detalle-act.component';
+import { TagsManagementService } from '../services/tags-management.service';
+import { TomaFisicaService } from './services/toma-fisica.service';
 
 @Component({
   selector: 'app-toma-fisica',
@@ -9,15 +13,12 @@ import { AlertController, ModalController, ToastController } from '@ionic/angula
   styleUrls: ['./toma-fisica.component.scss'],
 })
 export class TomaFisicaComponent  implements OnInit {
-  //activoRfidModal: ActivoRfid = new ActivoRfid();
-  //activoModal: Activo = new Activo();
 
-  //activosRfid: ActivoRfid[] = [];
-  activosRfid: any[] = [];
+  activosRfid: ActivoRfid[] = [];
 
   listaTags: any[] = [];
 
-  constructor(private router: Router, private modal: ModalController,
+  constructor(private _tomaFisicaService:TomaFisicaService, public tagsManagementService: TagsManagementService, private router: Router, private modal: ModalController,
               private bluetoothSerial: BluetoothSerial, private alertCtrl: AlertController,
               private toastCtrl: ToastController) { }
 
@@ -26,11 +27,11 @@ export class TomaFisicaComponent  implements OnInit {
   }
 
   obtenerListas() {
-    // this.service.getActivosRfid()
-    // .subscribe(data => {
-    //   this.activosRfid = data;
-    // });
-    // this.obtenerTags();
+    this._tomaFisicaService.getAllActivosRfid()
+    .subscribe((data:any) => {
+      this.activosRfid = data;
+    });
+    this.obtenerTags();
   }
 
   read2() {
@@ -50,7 +51,7 @@ export class TomaFisicaComponent  implements OnInit {
             if (this.listaTags.indexOf(asd) === -1 ){
               this.buscarEtiqueta(asd);
               this.listaTags.push(asd);
-             // this.service.listaTagsGlobal.push(asd);
+              this.tagsManagementService.pushTag = asd;
             }
             // this.listaTags.push(asd);
           }
@@ -63,33 +64,35 @@ export class TomaFisicaComponent  implements OnInit {
   }
 
   buscarEtiqueta(etiqueta: string) {
-    // this.service.getActivosRfidByCodigoR(etiqueta)
-    // .subscribe(data => {
-    //   if (data !== null ) {
-    //     console.log('IF');
-    //     this.activosRfid.push(data);
-    //     if (data.custodio1 !== this.service.funcionarioGlobal.identificacion) {
-    //       this.showError('Este bien pertence a otro custodio (' + this.service.funcionarioGlobal.nombre + ')');
-    //     }
-    //   } else {
-    //     this.showError('Etiqueta no existente');
-    //     this.listaTags.push(etiqueta);
-    //   }
-    // });
+    etiqueta = '300833B2DDD9014000000001';
+    this._tomaFisicaService.getActivoByCodigo({codigoRfid:etiqueta})
+    .subscribe((data:any) => {
+      if (data !== null ) {
+        console.log('data');
+        this.activosRfid.push(data);
+        // if (data.custodio1 !== this.service.funcionarioGlobal.identificacion) {
+        //   this.showError('Este bien pertence a otro custodio (' + this.service.funcionarioGlobal.nombre + ')');
+        // }
+      } else {
+        this.showError('Etiqueta no existente');
+        this.listaTags.push(etiqueta);
+      }
+    });
   }
 
   async obtenerTags() {
-    // this.listaTags = (await Rfid1Plugin.getTags('Filtro')).results;
-    // console.log('Tags: ' + this.listaTags);
+    //this.listaTags = (await Rfid1Plugin.getTags('Filtro')).results;
+    console.log('Tags: ' + this.listaTags);
   }
 
-  abrirDetalleR(activoR:any) {
-    // this.modal.create({
-    //   component: DetalleActRPage,
-    //   componentProps: {
-    //     activo: activoR
-    //   }
-    // }).then((modal) => modal.present());
+  abrirDetalleR(activoR: ActivoRfid) {
+    console.log(activoR);
+    this.modal.create({
+      component: DetalleActComponent,
+      componentProps: {
+        act: activoR
+      }
+    }).then((modal) => modal.present());
   }
 
   async showError(messageE: string) {

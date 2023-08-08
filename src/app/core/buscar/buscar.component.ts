@@ -57,17 +57,6 @@ export class BuscarComponent  implements OnInit {
     }
   }
 
-  etiquetarActivos() {
-    if (this.activos.length > 0 ) {
-      for(let i = 0;i < this.activos.length; i++){
-        this._tagsManagementService.pushTag= this.activos[i];
-      }
-      this.showToast('Se copio correctamente');
-    } else {
-      this.showError('No hay bienes para etiquetar');
-    }
-  }
-
   limpiarBusqueda() {
     this.mostrarCustodios = false;
     this.listaFuncionarios = [];
