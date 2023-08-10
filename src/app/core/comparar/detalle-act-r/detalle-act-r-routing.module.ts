@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CompararComponent } from './comparar.component';
+import { DetalleActRComponent } from './detalle-act-r.component';
 
 const routes: Routes = [
   {
-    path:'',
-    component: CompararComponent
+    path: '',
+    component: DetalleActRComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CompararRoutingModule { }
+export class DetalleActRRoutingModule { }

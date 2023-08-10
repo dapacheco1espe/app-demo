@@ -1,3 +1,53 @@
-<p>
-  comparar works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Comparar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Resultado de la comparación entre los bienes asignados al custodio y los leidos por RFID</ion-card-subtitle>
+      <ion-card-title>Resultado Sobrantes</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-card ion-item *ngFor="let activoR of activosSobrantes" (click)="abrirDetalleR(activoR)">
+          <ion-card-header>
+            <ion-card-subtitle>{{ activoR.codigo }}</ion-card-subtitle>
+            <ion-card-title>{{ activoR.descripcion }}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            {{ activoR.custodio1 }}
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Resultado Faltantes</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-card ion-item *ngFor="let activo of activosFaltantes" (click)="abrirDetalle(activo)">
+          <ion-card-header>
+            <ion-card-subtitle>{{ activo.codigo }}</ion-card-subtitle>
+            <ion-card-title>{{ activo.descripcion }}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            {{ activo.custodio1 }}
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

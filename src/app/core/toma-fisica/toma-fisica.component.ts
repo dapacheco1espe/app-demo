@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BluetoothSerial } from '@awesome-cordova-plugins/bluetooth-serial/ngx';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { TagsManagementService } from '../services/tags-management.service';
 import { ActivoRfid } from './Models/ActivoRfid';
 import { DetalleActComponent } from './detalle-act/detalle-act.component';
-import { TagsManagementService } from '../services/tags-management.service';
 import { TomaFisicaService } from './services/toma-fisica.service';
 
 @Component({
