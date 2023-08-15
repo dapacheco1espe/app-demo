@@ -36,27 +36,14 @@ export class TomaFisicaComponent  implements OnInit {
 
   read2() {
     this.bluetoothSerial.read().then(success => {
+      console.log("Leer tag method: "+success);
       let listaE = [];
-      listaE = success.split('\n');
-      for ( let i = 0; i < listaE.length; i++ ) {
-        let subListaE = [];
-        const val =  listaE[i].search(':');
-        if ( val !== -1 ) {
-          subListaE = listaE[i].split(':');
-          let a = '';
-          a = subListaE[0];
-          if ( a === 'EP') {
-            let asd = '';
-            asd = subListaE[1].trim();
-            if (this.listaTags.indexOf(asd) === -1 ){
-              this.buscarEtiqueta(asd);
-              this.listaTags.push(asd);
-              this.tagsManagementService.pushTag = asd;
-            }
-            // this.listaTags.push(asd);
-          }
+        listaE = success.split('\n');
+        for (let i = 0; i < listaE.length; i++) {
+          this.buscarEtiqueta(listaE[i]);
+          this.listaTags.push(listaE[i]);
+          this.tagsManagementService.pushTag = listaE[i];
         }
-      }
       this.showToast('Reader: ' + success);
     }, error => {
       this.showError('error Reader 2: ' + error);
@@ -64,11 +51,10 @@ export class TomaFisicaComponent  implements OnInit {
   }
 
   buscarEtiqueta(etiqueta: string) {
-    etiqueta = '300833B2DDD9014000000001';
+    console.log("Buscar la siguiente etiqueta: "+etiqueta);
     this._tomaFisicaService.getActivoByCodigo({codigoRfid:etiqueta})
     .subscribe((data:any) => {
       if (data !== null ) {
-        console.log('data');
         this.activosRfid.push(data);
         // if (data.custodio1 !== this.service.funcionarioGlobal.identificacion) {
         //   this.showError('Este bien pertence a otro custodio (' + this.service.funcionarioGlobal.nombre + ')');
@@ -86,7 +72,7 @@ export class TomaFisicaComponent  implements OnInit {
   }
 
   abrirDetalleR(activoR: ActivoRfid) {
-    console.log(activoR);
+    console.log("Activo que se abre en detalle component: "+activoR);
     this.modal.create({
       component: DetalleActComponent,
       componentProps: {

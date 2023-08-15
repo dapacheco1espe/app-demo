@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Activo } from '../../buscar/Models/Activo';
-import { ActivoRfid } from '../Models/ActivoRfid';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ArchivoJustif } from '../Models/ArchivoJustif';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { BluetoothSerial } from '@awesome-cordova-plugins/bluetooth-serial/ngx';
-import { Camera, CameraResultType,CameraSource } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { Activo } from '../../buscar/Models/Activo';
 import { TagsManagementService } from '../../services/tags-management.service';
+import { ActivoRfid } from '../Models/ActivoRfid';
+import { ArchivoJustif } from '../Models/ArchivoJustif';
 import { TomaFisicaService } from '../services/toma-fisica.service';
 @Component({
   selector: 'app-detalle-act',
@@ -27,7 +27,7 @@ export class DetalleActComponent  implements OnInit {
               private _toastController: ToastController) { }
 
   ngOnInit() {
-    console.log(this.act,'hola');
+    this._tagsManagementService.setCurrentTag = this.act;
    // this.service.activoRespuestaModal = new ActivoRfid();
   }
 
@@ -41,26 +41,11 @@ export class DetalleActComponent  implements OnInit {
     this.listaEtiquetas.push(a);*/
     this.bluetoothSerial.read().then(success => {
       let listaE = [];
-      listaE = success.split('\n');
-      for ( let i = 0; i < listaE.length; i++ ) {
-        let subListaE = [];
-        const val =  listaE[i].search(':');
-        if ( val !== -1 ) {
-          subListaE = listaE[i].split(':');
-          let a = '';
-          a = subListaE[0];
-          if ( a === 'EP') {
-            let asd = '';
-            asd = subListaE[1].trim();
-            if (this.listaEtiquetas.indexOf(asd) === -1 ){
-              this.buscarEtiqueta(asd);
-              this.listaEtiquetas.push(asd);
-              this._tagsManagementService.pushTag = asd;
-            }
-            // this.listaTags.push(asd);
-          }
+        listaE = success.split('\n');
+        for (let i = 0; i < listaE.length; i++) {
+          this.listaEtiquetas.push(listaE[i]);
+          this._tagsManagementService.pushTag = listaE[i];
         }
-      }
       this.showToast('Reader: ' + success);
     }, error => {
       this.showError('error Reader 2: ' + error);
@@ -87,7 +72,7 @@ export class DetalleActComponent  implements OnInit {
    // this._actR.usuario = this.service.nombreUsuario;
     this._actR.descripcion = this.act.codigo + '|' + this.act.descripcion;
     this.showToast('Etiqueta seleccionada');
-    //this.service.activoRespuestaModal = this._actR;
+    this._tagsManagementService.setCurrentTag = this._actR;
     this.listaEtiquetas = [];
   }
 

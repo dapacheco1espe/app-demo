@@ -1,3 +1,70 @@
-<p>
-  registro-tag works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" padding>
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-subtitle>Estos son los bienes seleccionados en la opción de búsqueda</ion-card-subtitle>
+      <ion-card-title>Etiquetar Activos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-card ion-item *ngFor="let activo of activos" (click)="abrirDetalle(activo)">
+          <ion-card-header>
+            <ion-card-subtitle></ion-card-subtitle>
+            <ion-card-title>{{ activo.descripcion }}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            Custodio: {{ activo.custodio1 }}
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="bubbles"
+          loadingText="Cargando datos...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-card-content>
+
+    <ion-card-header>
+      <ion-card-subtitle>Estos son los bienes etiquetados</ion-card-subtitle>
+      <ion-card-title>Etiquetados</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-card ion-item *ngFor="let activo of activosR">
+          <ion-card-header>
+            <ion-card-subtitle></ion-card-subtitle>
+            <ion-card-title>{{ activo.descripcion }}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <p>Custodio: {{ activo.custodio1 }}</p>
+            <p>Etiqueta: {{ activo.codigoRfid }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="bubbles"
+          loadingText="Cargando datos...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <ion-button  expand="block" (click)="guardarEtiquetas()">
+        Guardar
+       </ion-button>
+       <ion-button  expand="block" color='danger' (click)="limpiarEtiquetas()">
+        Limpiar
+       </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

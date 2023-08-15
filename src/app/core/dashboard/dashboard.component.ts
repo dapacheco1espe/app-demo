@@ -42,24 +42,6 @@ export class DashboardComponent implements OnInit {
           this.listaTags.push(listaE[i]);
           this._tagsManagementService.pushTag = listaE[i];
         }
-        // for ( let i = 0; i < listaE.length; i++ ) {
-        //   let subListaE = [];
-        //   const val =  listaE[i].search(':');
-        //   if ( val !== -1 ) {
-        //     subListaE = listaE[i].split(':');
-        //     let a = '';
-        //     a = subListaE[0];
-        //     if ( a === 'EP') {
-        //       let asd = '';
-        //       asd = subListaE[1].trim();
-        //       if (this.listaTags.indexOf(asd) === -1 ){
-        //         this.listaTags.push(asd);
-        //         //this.service.listaTagsGlobal.push(asd);
-        //       }
-        //       // this.listaTags.push(asd);
-        //     }
-        //   }
-        // }
         this._showToast('Reader: ' + success);
       },
       (error) => {

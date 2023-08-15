@@ -9,12 +9,12 @@ export interface Activo {
   codLocalidad          : number;
   conceptoTransaccion   : number;
   lote                  : number;
-  subLote               : number;
+  sublote               : number;
   descripcion           : string;
   observacion           : string;
   cantidad              : number;
   valor                 : number;
-  fechasAdquisicion     : string;
+  fechaAdquisicion     : string;
   custodio1             : string;
   custodio2             : string;
   usuario               : string;

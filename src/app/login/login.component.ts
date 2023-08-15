@@ -13,6 +13,7 @@ import { LoginService } from './services/login.service';
 })
 export class LoginComponent implements OnInit {
   usuarioIngresado = '';
+  passwordIngresado = '';
   private _tmpUser: Usuario;
   constructor(
     public _service: LoginService,
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
   ) {
     this._tmpUser = {
       login: '',
-      passwd: null,
+      passwd: '',
       tryAccess: null,
       dateTry: null,
     };
@@ -30,12 +31,13 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   login() {
-    if (this.usuarioIngresado !== '') {
+    if (this.usuarioIngresado !== '' && this.passwordIngresado !== '') {
       this.usuarioIngresado = this.usuarioIngresado.toUpperCase();
       this._tmpUser.login = this.usuarioIngresado;
+      this._tmpUser.passwd = this.passwordIngresado;
       this.validarUsuario(this._tmpUser);
     } else {
-      this.showError('Usuario vacio');
+      this.showError('Debe llenar todos los campos');
     }
   }
 
@@ -46,7 +48,7 @@ export class LoginComponent implements OnInit {
         this._router.navigateByUrl('/menu/dashboard');
       },
       error:(err:HttpErrorResponse)=>{
-        this.showError('Usuario incorrecto');
+        this.showError('Las credenciales no coinciden con las del sistema');
       }
     });
   }

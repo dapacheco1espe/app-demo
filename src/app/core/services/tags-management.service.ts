@@ -7,7 +7,8 @@ import { Funcionario } from '../buscar/Models/Funcionario';
 })
 export class TagsManagementService {
 
-  private _tagsList:BehaviorSubject<any> = new BehaviorSubject(null);
+  private _tagsList:BehaviorSubject<any> = new BehaviorSubject([]);
+  private _currentTag:BehaviorSubject<any> = new BehaviorSubject(null);
   private _currentFuncionario:BehaviorSubject<Funcionario> = new BehaviorSubject({
     codigo          : 0,
     codigoEmpresa   : 0,
@@ -33,5 +34,13 @@ export class TagsManagementService {
 
   public set setFuncionario(funcionario:Funcionario){
     this._currentFuncionario.next(funcionario);
+  }
+
+  public get currentTag():any{
+    return this._currentTag.getValue();
+  }
+
+  public set setCurrentTag(tag:any){
+    this._currentTag.next(tag);
   }
 }
